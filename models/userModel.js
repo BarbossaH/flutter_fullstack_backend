@@ -3,12 +3,14 @@ const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
+    lowercase: true,
     trim: true, //remove leading and trailing whitespace characters
   },
   email: {
     type: String,
     required: true,
     unique: true,
+    lowercase: true,
     validate: {
       validator: (value) => {
         const re =
