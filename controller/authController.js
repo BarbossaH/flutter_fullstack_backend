@@ -2,6 +2,7 @@ import JWT from 'jsonwebtoken';
 
 import UserModel from '../models/userModel.js';
 import { handleHashPwd, comparePwd } from '../utils/passwordHelper.js';
+import userModel from '../models/userModel.js';
 export const registerController = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -50,13 +51,46 @@ export const signInController = async (req, res) => {
     }
 
     const token = JWT.sign({ id: existingUser._id }, process.env.JWT_TOKEN);
-    console.log(existingUser._id);
+    // console.log(existingUser._id);
     return res.status(200).json({
       token,
-      user: { name: existingUser.name, email: existingUser.email },
+      ...existingUser._doc,
+      // user: { name: existingUser.name, email: existingUser.email },
     });
     // return res.status(200).json({ token, ...existingUser._doc });
   } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+};
+
+export const tokenCheckController = async (req, res) => {
+  try {
+    const token = req.header('x-auth-token');
+    // console.log(req.header('x-auth-token'), 345);
+    if (!token) return res.json(false);
+    const isVerified = JWT.verify(token, process.env.JWT_TOKEN);
+    if (!isVerified) {
+      return res.json(false);
+    }
+    // console.log(isVerified, 99999);
+    const user = await UserModel.findById(isVerified.id);
+    if (!user) return res.json(false);
+    return res.json(true);
+  } catch (error) {
+    // console.log(error.message, 2323);
+
+    return res.status(500).json({ error: error.message });
+  }
+};
+
+export const getUserDataController = async (req, res) => {
+  try {
+    const user = await userModel.findById(req.userId);
+    console.log('123321');
+    return res.json({ ...user._doc, token: req.token });
+  } catch (error) {
+    console.log(error.message, 333);
+
     return res.status(500).json({ error: error.message });
   }
 };
