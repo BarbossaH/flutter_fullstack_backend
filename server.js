@@ -21,7 +21,9 @@ const PORT = process.env.PORT || 3500;
 //     `Server run on model ${process.env.DEV_MODE} on PORT: ${PORT}`.bgCyan.white
 //   );
 // });
-app.listen(PORT, '0.0.0.0', () => {
+// app.listen(PORT, '169.254.143.238', () => {
+// app.listen(PORT, '127.0.0.1', () => {
+app.listen(PORT, '192.168.68.103', () => {
   console.log(
     `Server run on model ${process.env.DEV_MODE} on PORT: ${PORT}`.bgCyan.white
   );

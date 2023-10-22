@@ -14,8 +14,8 @@ router.post('/signIn', signInController);
 router.post('/tokenCheck', tokenCheckController);
 router.get('/getUserData', authTokenCheck, getUserDataController);
 
-// router.get('/users', (req, res) => {
-//   res.json({ hi: 'hello world' });
-// });
+router.get('/users', (req, res) => {
+  res.json({ hi: 'hello world' });
+});
 
 export default router;

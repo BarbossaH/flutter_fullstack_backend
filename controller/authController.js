@@ -36,6 +36,8 @@ export const registerController = async (req, res) => {
 
 export const signInController = async (req, res) => {
   try {
+    console.log(11123);
+
     const { email, password } = req.body;
     if (!email || !password) {
       return res.status(400).json({ message: 'Each field is required' });
@@ -50,7 +52,10 @@ export const signInController = async (req, res) => {
       return res.status(400).json({ message: 'Incorrect password ' });
     }
 
-    const token = JWT.sign({ id: existingUser._id }, process.env.JWT_TOKEN);
+    const token = JWT.sign(
+      { id: existingUser._id, type: existingUser.type },
+      process.env.JWT_TOKEN
+    );
     // console.log(existingUser._id);
     return res.status(200).json({
       token,
@@ -59,6 +64,7 @@ export const signInController = async (req, res) => {
     });
     // return res.status(200).json({ token, ...existingUser._doc });
   } catch (error) {
+    console.log(error.message, 9999);
     return res.status(500).json({ error: error.message });
   }
 };
@@ -86,7 +92,7 @@ export const tokenCheckController = async (req, res) => {
 export const getUserDataController = async (req, res) => {
   try {
     const user = await userModel.findById(req.userId);
-    console.log('123321');
+    // console.log('123321');
     return res.json({ ...user._doc, token: req.token });
   } catch (error) {
     console.log(error.message, 333);

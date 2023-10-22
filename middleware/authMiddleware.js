@@ -3,7 +3,7 @@ import JWT from 'jsonwebtoken';
 export const authTokenCheck = async (req, res, next) => {
   try {
     const token = req.header('x-auth-token');
-    console.log(req.header('x-auth-token'), 123);
+    // console.log(req.header('x-auth-token'), 123);
     if (!token) {
       return res.status(401).json({ message: 'No auth token' });
     }
