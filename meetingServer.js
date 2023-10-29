@@ -19,9 +19,9 @@ const parseMessage = (message) => {
   }
 };
 
-const listenMessage = (meetingId, socket, message, meetingServer) => {
+const listenMessage = (meetingId, socket, meetingServer) => {
   socket.on('message', (message) =>
-    handMessage(meetingId, socket, meetingServer)
+    handMessage(meetingId, socket, message, meetingServer)
   );
 };
 

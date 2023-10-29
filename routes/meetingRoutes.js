@@ -6,8 +6,8 @@ import {
 } from '../controller/meetingController.js';
 const router = express.Router();
 
-router.post('/meeting/start', startMeetingController);
-router.get('meeting/join', checkMeetingExistController);
-router.get('meeting/get', getAllMeetingUsersController);
+router.post('/start', startMeetingController);
+router.get('/join', checkMeetingExistController);
+router.get('/get', getAllMeetingUsersController);
 
 export default router;

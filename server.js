@@ -18,6 +18,7 @@ initMeetingServer(server);
 app.use(express.json());
 //routes
 app.use('/api/auth', authRoutes);
+
 app.use('/api/meeting', meetingRoutes);
 
 // PORT

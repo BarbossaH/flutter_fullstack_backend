@@ -24,15 +24,24 @@ export const getAllMeetingUsersService = async (meetingId, callback) => {
 // };
 
 export const startMeetingService = async (params, callback) => {
-  const meetingSchema = new meetingModel(params);
-  meetingSchema
-    .save()
-    .then((response) => {
-      return callback(null, response);
-    })
-    .catch((e) => {
-      return callback(e);
-    });
+  try {
+    const meetingSchema = new meetingModel(params);
+    const response = await meetingSchema.save();
+    // console.log(response.id, 1123);
+    return callback(null, response);
+  } catch (e) {
+    return callback(e);
+  }
+
+  //   const meetingSchema = new meetingModel(params);
+  //   meetingSchema
+  //     .save()
+  //     .then((response) => {
+  //       return callback(null, response);
+  //     })
+  //     .catch((e) => {
+  //       return callback(e);
+  //     });
 };
 
 export const joinMeetingService = async (params, callback) => {
@@ -66,7 +75,7 @@ export const isMeetingPresentService = async (meetingId, callback) => {
 
 export const checkMeetingExistService = async (meetingId, callback) => {
   meetingModel
-    .findById(meetingId, 'hostId, hostName, startTime')
+    .findById(meetingId)
     .populate('meetingUsers', 'MeetingUser')
     .then((response) => {
       if (!response) callback('Invalid meeting id');
